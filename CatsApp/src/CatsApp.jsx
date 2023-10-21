@@ -9,9 +9,6 @@ const catAdapter = (response) => {
   };
 };
 
-
-
-
 const Cat = () => {
   const [data, setData] = useState({
     id: '',
