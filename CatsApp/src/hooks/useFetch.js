@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { getCatService } from '../catService';
-import { catAdapter } from '../adapters/catAdapter';
+import { useEffect, useState } from 'react'
 
-const useFetch = () => {
+const useFetch = (service) => {
     const [data, setData] = useState({
         id: "",
         url: "url",
@@ -10,16 +8,14 @@ const useFetch = () => {
       const [isLoading, setIsLoading] = useState(false);
       const [error, setError] = useState(null);
     
-      const getCat = async () => {
+      const getData = async () => {
         setError(null);
         setIsLoading(true);
     
         try {
-          const response = await getCatService();
+          const response = await service();
     
-          const adapted = catAdapter(response);
-    
-          setData(adapted);
+          setData(response);
         } catch (error) {
           setError(error);
         } finally {
@@ -28,11 +24,11 @@ const useFetch = () => {
       };
     
       useEffect(() => {
-        getCat();
+        getData();
       }, []);
 
       return {
-        data, getCat,
+        data, getData, isLoading, error 
       }
 }
 
